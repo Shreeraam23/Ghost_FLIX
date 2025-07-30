@@ -43,7 +43,7 @@
 
 ## 📸 Demo Screenshot
 
-<img src="https://i.imgur.com/GhostflixDemo.jpg" width="600"/>
+<img src="https://github.com/H4ckethics138/Ghost_FLIX/blob/main/IMG_20250730_090353.png" width="600"/>
 
 ---
 
