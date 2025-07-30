@@ -50,6 +50,6 @@
 ## ⚙️ Installation
 
 ```bash
-git clone https://github.com/H4ckethics138/GHOSTFLIX-V1.0
-cd GHOSTFLIX-V1.0
+git clone https://github.com/H4ckethics138/Ghost_FLIX.git
+cd Ghost_FLIX
 python3 main.py
